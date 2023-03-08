@@ -10,7 +10,7 @@ import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
 
-    val users = listOf(User("pippo", "pippo841!"), User("mario", "itsmemario4$"), User("luigi", "iambored1!"))
+    val users = listOf(User("pippo@gmail.com", "pippo841!"), User("mario@gmail.com", "itsmemario4$"), User("luigi@gmail.com", "iambored1!"))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
