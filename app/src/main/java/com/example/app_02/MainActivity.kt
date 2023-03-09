@@ -23,23 +23,31 @@ class MainActivity : AppCompatActivity() {
         val password = findViewById<EditText>(R.id.fieldPassword)
 
         button.setOnClickListener{
+
             var logged = false
 
             try{
-                if((email.text.isNotEmpty() || password.text.isNotEmpty()) && password.text.length > 6 && Patterns.EMAIL_ADDRESS.matcher(email.text).matches()){
-                    for (user in users){
-                        if(user.email == email.text.toString() && user.password == password.text.toString()){
-                            Toast.makeText(this, "Login effettuato", Toast.LENGTH_SHORT).show()
-                            logged = true
+                if((email.text.isNotEmpty() || password.text.isNotEmpty())){
+                    if(password.text.length < 6){
+                        password.error = "controllare che la password sia lunga più di 6 caratteri"
+                    } else if(!Patterns.EMAIL_ADDRESS.matcher(email.text).matches()){
+                        email.error = "controllare che l'email contenga la @ e il dominio"
+                    } else {
+                        for (user in users){
+                            if(user.email == email.text.toString() && user.password == password.text.toString()){
+                                Toast.makeText(this, "Login effettuato", Toast.LENGTH_SHORT).show()
+                                logged = true
+                            }
+                        }
+                        if(!logged){
+                            Toast.makeText(this, "Login fallito, controllare password o username", Toast.LENGTH_SHORT).show()
                         }
                     }
-                    if(!logged){
-                        Toast.makeText(this, "Login fallito, controllare password o username", Toast.LENGTH_SHORT).show()
-                    }
                 }else{
-                    Toast.makeText(this, "Controllare che tutti i campi siano validi", Toast.LENGTH_SHORT).show()
+                    password.error = "compilare il campo"
+                    email.error = "compilare il campo"
+                    // Toast.makeText(this, "Controllare che tutti i campi siano validi", Toast.LENGTH_SHORT).show()
                 }
-
             }catch (error: java.lang.Error){
                 Toast.makeText(this, "Errore", Toast.LENGTH_SHORT).show()
             }
